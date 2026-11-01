@@ -87,12 +87,17 @@ function AdminPage() {
     <div className="mx-auto max-w-6xl px-8 py-10">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-3xl font-bold">Admin panel</h1>
+        <div className="flex flex-wrap gap-2">
+        <Button asChild variant="outline" size="sm">
+          <Link to="/admin-credentials"><KeyRound className="mr-2 h-4 w-4" />Credentials</Link>
+        </Button>
         <Button asChild variant="outline" size="sm">
           <Link to="/platform-health">
             <Activity className="mr-2 h-4 w-4" />
             Platform health &amp; live checks
           </Link>
         </Button>
+        </div>
       </div>
 
 

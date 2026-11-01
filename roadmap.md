@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Add an admin credential inventory with names and configuration status only; private values remain hidden.
+
 - [x] Verify the Lovable preview API and hosted backend
 - [x] Verify third-party CORS and API-key error handling
 - [x] Publish the current Lovable project build
