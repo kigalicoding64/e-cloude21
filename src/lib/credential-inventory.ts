@@ -22,3 +22,17 @@ export function credentialInventory(isConfigured: (name: string) => boolean) {
 export function requireCredentialAdmin(isAdmin: boolean | null, hasError: boolean) {
   if (hasError || isAdmin !== true) throw new Error("Administrator access required");
 }
+
+/** Only browser-published connection settings; never read private server credentials. */
+export function publicConnectionValue(name: string, connection: { url?: string; publishableKey?: string }) {
+  switch (name) {
+    case "VITE_SUPABASE_URL":
+    case "SUPABASE_URL":
+      return connection.url || null;
+    case "VITE_SUPABASE_PUBLISHABLE_KEY":
+    case "SUPABASE_PUBLISHABLE_KEY":
+      return connection.publishableKey || null;
+    default:
+      return null;
+  }
+}
