@@ -1,7 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { credentialInventory, requireCredentialAdmin } from "./credential-inventory";
+import { credentialInventory, requireCredentialAdmin, publicConnectionValue } from "./credential-inventory";
 
 describe("credential inventory security", () => {
+  it("allows only the four public connection aliases to reveal values", () => {
+    const connection = { url: "https://public.example", publishableKey: "public-test-key" };
+    for (const name of ["VITE_SUPABASE_URL", "SUPABASE_URL"]) {
+      expect(publicConnectionValue(name, connection)).toBe("https://public.example");
+    }
+    for (const name of ["VITE_SUPABASE_PUBLISHABLE_KEY", "SUPABASE_PUBLISHABLE_KEY"]) {
+      expect(publicConnectionValue(name, connection)).toBe("public-test-key");
+    }
+    for (const name of ["SUPABASE_SERVICE_ROLE_KEY", "LOVABLE_API_KEY", "STREAMTAPE_LOGIN", "STREAMTAPE_KEY", "UNKNOWN"]) {
+      expect(publicConnectionValue(name, connection)).toBeNull();
+    }
+    expect(publicConnectionValue("SUPABASE_URL", {})).toBeNull();
+  });
   it("includes all five requested connection credential names", () => {
     const names = credentialInventory(() => false).map((item) => item.name);
     expect(names).toEqual(expect.arrayContaining([

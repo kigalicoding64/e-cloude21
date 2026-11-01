@@ -1,12 +1,14 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, Copy, KeyRound, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Copy, Eye, EyeOff, KeyRound, LockKeyhole, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { getCredentialInventory } from "@/lib/credentials.functions";
+import { publicConnectionValue } from "@/lib/credential-inventory";
 
 export const Route = createFileRoute("/_authenticated/admin-credentials")({
   head: () => ({ meta: [
@@ -27,6 +29,11 @@ export const Route = createFileRoute("/_authenticated/admin-credentials")({
 });
 
 function CredentialsPage() {
+  const [visible, setVisible] = useState<Record<string, boolean>>({});
+  const publicConnection = {
+    url: import.meta.env.VITE_SUPABASE_URL,
+    publishableKey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+  };
   const getInventory = useServerFn(getCredentialInventory);
   const { data, isPending, isError, isFetching, refetch } = useQuery({
     queryKey: ["admin-credentials"],
@@ -36,6 +43,12 @@ function CredentialsPage() {
   async function copyName(name: string) {
     try { await navigator.clipboard.writeText(name); toast.success("Credential name copied"); }
     catch { toast.error("Could not copy credential name"); }
+  }
+  async function copyValue(name: string) {
+    const value = publicConnectionValue(name, publicConnection);
+    if (!value) return;
+    try { await navigator.clipboard.writeText(value); toast.success("Public connection value copied"); }
+    catch { toast.error("Could not copy connection value"); }
   }
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
@@ -50,14 +63,27 @@ function CredentialsPage() {
       ) : (
         <div className="overflow-x-auto border-y border-border">
           <table className="w-full text-left text-sm">
-            <thead className="bg-surface-2 text-muted-foreground"><tr>{["Credential", "Used for", "Access", "Status", ""].map((label, i) => <th key={i} className="px-4 py-3 font-medium">{label}</th>)}</tr></thead>
-            <tbody>{data?.map((row) => <tr key={row.name} className="border-t border-border">
+            <thead className="bg-surface-2 text-muted-foreground"><tr>{["Credential", "Used for", "Access", "Status", "Value", ""].map((label, i) => <th key={i} className="px-4 py-3 font-medium">{label}</th>)}</tr></thead>
+            <tbody>{data?.map((row) => {
+              const publicValue = publicConnectionValue(row.name, publicConnection);
+              const shown = Boolean(visible[row.name]);
+              return <tr key={row.name} className="border-t border-border">
               <td className="px-4 py-4 font-mono text-xs">{row.name}</td>
               <td className="px-4 py-4">{row.purpose}</td>
               <td className="px-4 py-4 text-muted-foreground">{row.kind}</td>
               <td className="px-4 py-4"><Badge variant={row.status === "Configured" ? "secondary" : "outline"}>{row.status}</Badge></td>
+              <td className="px-4 py-4">
+                <div className="flex items-start gap-2">
+                  <span className="block w-48 break-all font-mono text-xs leading-5" aria-label={`${row.name} value`}>{publicValue ? (shown ? publicValue : "••••••••••••") : "••••••••••••"}</span>
+                  {publicValue ? <div className="flex shrink-0">
+                    <Button variant="ghost" size="icon" aria-label={`${shown ? "Hide" : "Show"} public value ${row.name}`} title={shown ? "Hide public value" : "Show public value"} aria-pressed={shown} onClick={() => setVisible((current) => ({ ...current, [row.name]: !current[row.name] }))}>{shown ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</Button>
+                    <Button variant="ghost" size="icon" aria-label={`Copy public value ${row.name}`} title="Copy public value" onClick={() => copyValue(row.name)}><Copy className="h-4 w-4" /></Button>
+                  </div> : <LockKeyhole className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" aria-label="Value unavailable" />}
+                </div>
+              </td>
               <td className="px-4 py-4"><Button variant="ghost" size="icon" aria-label={`Copy name ${row.name}`} title="Copy credential name" onClick={() => copyName(row.name)}><Copy className="h-4 w-4" /></Button></td>
-            </tr>)}</tbody>
+            </tr>;
+            })}</tbody>
           </table>
         </div>
       )}
