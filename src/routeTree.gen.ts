@@ -33,6 +33,7 @@ import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } fr
 import { Route as DotwellKnownOpenidConfigurationRouteImport } from './routes/[.]well-known.openid-configuration'
 import { Route as AuthenticatedActivityRouteImport } from './routes/_authenticated/activity'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminCredentialsRouteImport } from './routes/_authenticated/admin-credentials'
 import { Route as AuthenticatedApiKeysRouteImport } from './routes/_authenticated/api-keys'
 import { Route as AuthenticatedBackupRouteImport } from './routes/_authenticated/backup'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -229,6 +230,12 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminCredentialsRoute =
+  AuthenticatedAdminCredentialsRouteImport.update({
+    id: '/admin-credentials',
+    path: '/admin-credentials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedApiKeysRoute = AuthenticatedApiKeysRouteImport.update({
   id: '/api-keys',
   path: '/api-keys',
@@ -642,6 +649,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
   '/activity': typeof AuthenticatedActivityRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/api-keys': typeof AuthenticatedApiKeysRoute
   '/backup': typeof AuthenticatedBackupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -740,6 +748,7 @@ export interface FileRoutesByTo {
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
   '/activity': typeof AuthenticatedActivityRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/api-keys': typeof AuthenticatedApiKeysRoute
   '/backup': typeof AuthenticatedBackupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -840,6 +849,7 @@ export interface FileRoutesById {
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
   '/_authenticated/activity': typeof AuthenticatedActivityRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/_authenticated/api-keys': typeof AuthenticatedApiKeysRoute
   '/_authenticated/backup': typeof AuthenticatedBackupRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -940,6 +950,7 @@ export interface FileRouteTypes {
     | '/.well-known/openid-configuration'
     | '/activity'
     | '/admin'
+    | '/admin-credentials'
     | '/api-keys'
     | '/backup'
     | '/dashboard'
@@ -1038,6 +1049,7 @@ export interface FileRouteTypes {
     | '/.well-known/openid-configuration'
     | '/activity'
     | '/admin'
+    | '/admin-credentials'
     | '/api-keys'
     | '/backup'
     | '/dashboard'
@@ -1137,6 +1149,7 @@ export interface FileRouteTypes {
     | '/.well-known/openid-configuration'
     | '/_authenticated/activity'
     | '/_authenticated/admin'
+    | '/_authenticated/admin-credentials'
     | '/_authenticated/api-keys'
     | '/_authenticated/backup'
     | '/_authenticated/dashboard'
@@ -1454,6 +1467,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin-credentials': {
+      id: '/_authenticated/admin-credentials'
+      path: '/admin-credentials'
+      fullPath: '/admin-credentials'
+      preLoaderRoute: typeof AuthenticatedAdminCredentialsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/api-keys': {
@@ -2000,6 +2020,7 @@ const AuthenticatedAiModelsRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedActivityRoute: typeof AuthenticatedActivityRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminCredentialsRoute: typeof AuthenticatedAdminCredentialsRoute
   AuthenticatedApiKeysRoute: typeof AuthenticatedApiKeysRoute
   AuthenticatedBackupRoute: typeof AuthenticatedBackupRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -2024,6 +2045,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedActivityRoute: AuthenticatedActivityRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminCredentialsRoute: AuthenticatedAdminCredentialsRoute,
   AuthenticatedApiKeysRoute: AuthenticatedApiKeysRoute,
   AuthenticatedBackupRoute: AuthenticatedBackupRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
