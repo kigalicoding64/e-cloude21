@@ -28,6 +28,7 @@ import { Route as OpenapiDotyamlRouteImport } from './routes/openapi[.]yaml'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as PostmanDotjsonRouteImport } from './routes/postman[.]json'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WidgetDotjsRouteImport } from './routes/widget[.]js'
 import { Route as DotwellKnownEgreedCloudDotjsonRouteImport } from './routes/[.]well-known/egreed-cloud[.]json'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as DotwellKnownOpenidConfigurationRouteImport } from './routes/[.]well-known.openid-configuration'
@@ -202,6 +203,11 @@ const PostmanDotjsonRoute = PostmanDotjsonRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WidgetDotjsRoute = WidgetDotjsRouteImport.update({
+  id: '/widget.js',
+  path: '/widget.js',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DotwellKnownEgreedCloudDotjsonRoute =
@@ -656,6 +662,7 @@ export interface FileRoutesByFullPath {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -757,6 +764,7 @@ export interface FileRoutesByTo {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -860,6 +868,7 @@ export interface FileRoutesById {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -963,6 +972,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -1064,6 +1074,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -1166,6 +1177,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -1269,6 +1281,7 @@ export interface RootRouteChildren {
   PlaygroundRoute: typeof PlaygroundRoute
   PostmanDotjsonRoute: typeof PostmanDotjsonRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WidgetDotjsRoute: typeof WidgetDotjsRoute
   DotwellKnownEgreedCloudDotjsonRoute: typeof DotwellKnownEgreedCloudDotjsonRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   DotwellKnownOpenidConfigurationRoute: typeof DotwellKnownOpenidConfigurationRoute
@@ -1457,6 +1470,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/widget.js': {
+      id: '/widget.js'
+      path: '/widget.js'
+      fullPath: '/widget.js'
+      preLoaderRoute: typeof WidgetDotjsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/egreed-cloud.json': {
@@ -2164,6 +2184,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlaygroundRoute: PlaygroundRoute,
   PostmanDotjsonRoute: PostmanDotjsonRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WidgetDotjsRoute: WidgetDotjsRoute,
   DotwellKnownEgreedCloudDotjsonRoute: DotwellKnownEgreedCloudDotjsonRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
