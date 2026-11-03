@@ -63,7 +63,7 @@ function WidgetsPage() {
     qc.invalidateQueries({ queryKey: ["model-widgets"] });
   }
 
-  async function update(id: string, patch: Record<string, unknown>) {
+  async function update(id: string, patch: { is_active?: boolean; inference_url?: string | null }) {
     const { error } = await supabase.from("model_widgets").update(patch).eq("id", id);
     if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["model-widgets"] });
   }
