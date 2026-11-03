@@ -28,6 +28,7 @@ import { Route as OpenapiDotyamlRouteImport } from './routes/openapi[.]yaml'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as PostmanDotjsonRouteImport } from './routes/postman[.]json'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WidgetDotjsRouteImport } from './routes/widget[.]js'
 import { Route as DotwellKnownEgreedCloudDotjsonRouteImport } from './routes/[.]well-known/egreed-cloud[.]json'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as DotwellKnownOpenidConfigurationRouteImport } from './routes/[.]well-known.openid-configuration'
@@ -63,6 +64,7 @@ import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.
 import { Route as AuthenticatedAiDeploymentsRouteImport } from './routes/_authenticated/ai.deployments'
 import { Route as AuthenticatedAiModelsRouteImport } from './routes/_authenticated/ai.models'
 import { Route as AuthenticatedAiOrchestratorsRouteImport } from './routes/_authenticated/ai.orchestrators'
+import { Route as AuthenticatedAiWidgetsRouteImport } from './routes/_authenticated/ai.widgets'
 import { Route as AuthenticatedOrganizationsIdRouteImport } from './routes/_authenticated/organizations.$id'
 import { Route as ApiFilesIndexRouteImport } from './routes/api/files/index'
 import { Route as ApiFilesIdRouteImport } from './routes/api/files/$id'
@@ -85,6 +87,7 @@ import { Route as ApiPublicV1MetricsRouteImport } from './routes/api/public/v1/m
 import { Route as ApiPublicV1OpenapiDotjsonRouteImport } from './routes/api/public/v1/openapi[.]json'
 import { Route as ApiPublicV1OpenapiDotyamlRouteImport } from './routes/api/public/v1/openapi[.]yaml'
 import { Route as ApiPublicV1ReadyRouteImport } from './routes/api/public/v1/ready'
+import { Route as ApiPublicWidgetIdRouteImport } from './routes/api/public/widget/$id'
 import { Route as ApiV1FilesIndexRouteImport } from './routes/api/v1/files/index'
 import { Route as ApiV1FilesIdRouteImport } from './routes/api/v1/files/$id'
 import { Route as ApiV1FoldersIndexRouteImport } from './routes/api/v1/folders/index'
@@ -100,6 +103,7 @@ import { Route as ApiPublicV1FoldersIdRouteImport } from './routes/api/public/v1
 import { Route as ApiPublicV1SharesTokenRouteImport } from './routes/api/public/v1/shares/$token'
 import { Route as ApiPublicV1UploadsIdRouteImport } from './routes/api/public/v1/uploads/$id'
 import { Route as ApiPublicV1UploadsInitRouteImport } from './routes/api/public/v1/uploads/init'
+import { Route as ApiPublicWidgetIdChatRouteImport } from './routes/api/public/widget/$id.chat'
 import { Route as ApiPublicV1AgentJobsNextRouteImport } from './routes/api/public/v1/agent/jobs.next'
 import { Route as ApiPublicV1FilesIdSignedUrlRouteImport } from './routes/api/public/v1/files/$id.signed-url'
 import { Route as ApiPublicV1UploadsIdCompleteRouteImport } from './routes/api/public/v1/uploads/$id.complete'
@@ -200,6 +204,11 @@ const PostmanDotjsonRoute = PostmanDotjsonRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WidgetDotjsRoute = WidgetDotjsRouteImport.update({
+  id: '/widget.js',
+  path: '/widget.js',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DotwellKnownEgreedCloudDotjsonRoute =
@@ -388,6 +397,11 @@ const AuthenticatedAiOrchestratorsRoute =
     path: '/ai/orchestrators',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAiWidgetsRoute = AuthenticatedAiWidgetsRouteImport.update({
+  id: '/ai/widgets',
+  path: '/ai/widgets',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOrganizationsIdRoute =
   AuthenticatedOrganizationsIdRouteImport.update({
     id: '/$id',
@@ -505,6 +519,11 @@ const ApiPublicV1ReadyRoute = ApiPublicV1ReadyRouteImport.update({
   path: '/api/public/v1/ready',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicWidgetIdRoute = ApiPublicWidgetIdRouteImport.update({
+  id: '/api/public/widget/$id',
+  path: '/api/public/widget/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiV1FilesIndexRoute = ApiV1FilesIndexRouteImport.update({
   id: '/api/v1/files/',
   path: '/api/v1/files/',
@@ -582,6 +601,11 @@ const ApiPublicV1UploadsInitRoute = ApiPublicV1UploadsInitRouteImport.update({
   path: '/api/public/v1/uploads/init',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicWidgetIdChatRoute = ApiPublicWidgetIdChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => ApiPublicWidgetIdRoute,
+} as any)
 const ApiPublicV1AgentJobsNextRoute =
   ApiPublicV1AgentJobsNextRouteImport.update({
     id: '/api/public/v1/agent/jobs/next',
@@ -644,6 +668,7 @@ export interface FileRoutesByFullPath {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -679,6 +704,7 @@ export interface FileRoutesByFullPath {
   '/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -700,6 +726,7 @@ export interface FileRoutesByFullPath {
   '/api/public/v1/openapi.json': typeof ApiPublicV1OpenapiDotjsonRoute
   '/api/public/v1/openapi.yaml': typeof ApiPublicV1OpenapiDotyamlRoute
   '/api/public/v1/ready': typeof ApiPublicV1ReadyRoute
+  '/api/public/widget/$id': typeof ApiPublicWidgetIdRouteWithChildren
   '/api/v1/files/$id': typeof ApiV1FilesIdRoute
   '/api/public/v1/': typeof ApiPublicV1IndexRoute
   '/api/v1/files/': typeof ApiV1FilesIndexRoute
@@ -714,6 +741,7 @@ export interface FileRoutesByFullPath {
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
+  '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
@@ -743,6 +771,7 @@ export interface FileRoutesByTo {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -778,6 +807,7 @@ export interface FileRoutesByTo {
   '/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -799,6 +829,7 @@ export interface FileRoutesByTo {
   '/api/public/v1/openapi.json': typeof ApiPublicV1OpenapiDotjsonRoute
   '/api/public/v1/openapi.yaml': typeof ApiPublicV1OpenapiDotyamlRoute
   '/api/public/v1/ready': typeof ApiPublicV1ReadyRoute
+  '/api/public/widget/$id': typeof ApiPublicWidgetIdRouteWithChildren
   '/api/v1/files/$id': typeof ApiV1FilesIdRoute
   '/api/public/v1': typeof ApiPublicV1IndexRoute
   '/api/v1/files': typeof ApiV1FilesIndexRoute
@@ -813,6 +844,7 @@ export interface FileRoutesByTo {
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
+  '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
   '/api/public/v1/files': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
@@ -844,6 +876,7 @@ export interface FileRoutesById {
   '/playground': typeof PlaygroundRoute
   '/postman.json': typeof PostmanDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/widget.js': typeof WidgetDotjsRoute
   '/.well-known/egreed-cloud.json': typeof DotwellKnownEgreedCloudDotjsonRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
@@ -879,6 +912,7 @@ export interface FileRoutesById {
   '/_authenticated/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/_authenticated/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/_authenticated/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/_authenticated/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/_authenticated/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -900,6 +934,7 @@ export interface FileRoutesById {
   '/api/public/v1/openapi.json': typeof ApiPublicV1OpenapiDotjsonRoute
   '/api/public/v1/openapi.yaml': typeof ApiPublicV1OpenapiDotyamlRoute
   '/api/public/v1/ready': typeof ApiPublicV1ReadyRoute
+  '/api/public/widget/$id': typeof ApiPublicWidgetIdRouteWithChildren
   '/api/v1/files/$id': typeof ApiV1FilesIdRoute
   '/api/public/v1/': typeof ApiPublicV1IndexRoute
   '/api/v1/files/': typeof ApiV1FilesIndexRoute
@@ -914,6 +949,7 @@ export interface FileRoutesById {
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
+  '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
@@ -945,6 +981,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -980,6 +1017,7 @@ export interface FileRouteTypes {
     | '/ai/deployments'
     | '/ai/models'
     | '/ai/orchestrators'
+    | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1001,6 +1039,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/openapi.json'
     | '/api/public/v1/openapi.yaml'
     | '/api/public/v1/ready'
+    | '/api/public/widget/$id'
     | '/api/v1/files/$id'
     | '/api/public/v1/'
     | '/api/v1/files/'
@@ -1015,6 +1054,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/shares/$token'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
+    | '/api/public/widget/$id/chat'
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
@@ -1044,6 +1084,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -1079,6 +1120,7 @@ export interface FileRouteTypes {
     | '/ai/deployments'
     | '/ai/models'
     | '/ai/orchestrators'
+    | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1100,6 +1142,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/openapi.json'
     | '/api/public/v1/openapi.yaml'
     | '/api/public/v1/ready'
+    | '/api/public/widget/$id'
     | '/api/v1/files/$id'
     | '/api/public/v1'
     | '/api/v1/files'
@@ -1114,6 +1157,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/shares/$token'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
+    | '/api/public/widget/$id/chat'
     | '/api/public/v1/files'
     | '/api/public/v1/folders'
     | '/api/public/v1/agent/jobs/next'
@@ -1144,6 +1188,7 @@ export interface FileRouteTypes {
     | '/playground'
     | '/postman.json'
     | '/sitemap.xml'
+    | '/widget.js'
     | '/.well-known/egreed-cloud.json'
     | '/.well-known/oauth-protected-resource'
     | '/.well-known/openid-configuration'
@@ -1179,6 +1224,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai/deployments'
     | '/_authenticated/ai/models'
     | '/_authenticated/ai/orchestrators'
+    | '/_authenticated/ai/widgets'
     | '/_authenticated/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1200,6 +1246,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/openapi.json'
     | '/api/public/v1/openapi.yaml'
     | '/api/public/v1/ready'
+    | '/api/public/widget/$id'
     | '/api/v1/files/$id'
     | '/api/public/v1/'
     | '/api/v1/files/'
@@ -1214,6 +1261,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/shares/$token'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
+    | '/api/public/widget/$id/chat'
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
@@ -1245,6 +1293,7 @@ export interface RootRouteChildren {
   PlaygroundRoute: typeof PlaygroundRoute
   PostmanDotjsonRoute: typeof PostmanDotjsonRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WidgetDotjsRoute: typeof WidgetDotjsRoute
   DotwellKnownEgreedCloudDotjsonRoute: typeof DotwellKnownEgreedCloudDotjsonRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   DotwellKnownOpenidConfigurationRoute: typeof DotwellKnownOpenidConfigurationRoute
@@ -1277,6 +1326,7 @@ export interface RootRouteChildren {
   ApiPublicV1OpenapiDotjsonRoute: typeof ApiPublicV1OpenapiDotjsonRoute
   ApiPublicV1OpenapiDotyamlRoute: typeof ApiPublicV1OpenapiDotyamlRoute
   ApiPublicV1ReadyRoute: typeof ApiPublicV1ReadyRoute
+  ApiPublicWidgetIdRoute: typeof ApiPublicWidgetIdRouteWithChildren
   ApiV1FilesIdRoute: typeof ApiV1FilesIdRoute
   ApiPublicV1IndexRoute: typeof ApiPublicV1IndexRoute
   ApiV1FilesIndexRoute: typeof ApiV1FilesIndexRoute
@@ -1432,6 +1482,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/widget.js': {
+      id: '/widget.js'
+      path: '/widget.js'
+      fullPath: '/widget.js'
+      preLoaderRoute: typeof WidgetDotjsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/egreed-cloud.json': {
@@ -1679,6 +1736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiOrchestratorsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ai/widgets': {
+      id: '/_authenticated/ai/widgets'
+      path: '/ai/widgets'
+      fullPath: '/ai/widgets'
+      preLoaderRoute: typeof AuthenticatedAiWidgetsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/organizations/$id': {
       id: '/_authenticated/organizations/$id'
       path: '/$id'
@@ -1833,6 +1897,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1ReadyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/widget/$id': {
+      id: '/api/public/widget/$id'
+      path: '/api/public/widget/$id'
+      fullPath: '/api/public/widget/$id'
+      preLoaderRoute: typeof ApiPublicWidgetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/v1/files/': {
       id: '/api/v1/files/'
       path: '/api/v1/files'
@@ -1938,6 +2009,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1UploadsInitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/widget/$id/chat': {
+      id: '/api/public/widget/$id/chat'
+      path: '/chat'
+      fullPath: '/api/public/widget/$id/chat'
+      preLoaderRoute: typeof ApiPublicWidgetIdChatRouteImport
+      parentRoute: typeof ApiPublicWidgetIdRoute
+    }
     '/api/public/v1/agent/jobs/next': {
       id: '/api/public/v1/agent/jobs/next'
       path: '/api/public/v1/agent/jobs/next'
@@ -2040,6 +2118,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiDeploymentsRoute: typeof AuthenticatedAiDeploymentsRoute
   AuthenticatedAiModelsRoute: typeof AuthenticatedAiModelsRouteWithChildren
   AuthenticatedAiOrchestratorsRoute: typeof AuthenticatedAiOrchestratorsRoute
+  AuthenticatedAiWidgetsRoute: typeof AuthenticatedAiWidgetsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -2065,10 +2144,22 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAiDeploymentsRoute: AuthenticatedAiDeploymentsRoute,
   AuthenticatedAiModelsRoute: AuthenticatedAiModelsRouteWithChildren,
   AuthenticatedAiOrchestratorsRoute: AuthenticatedAiOrchestratorsRoute,
+  AuthenticatedAiWidgetsRoute: AuthenticatedAiWidgetsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface ApiPublicWidgetIdRouteChildren {
+  ApiPublicWidgetIdChatRoute: typeof ApiPublicWidgetIdChatRoute
+}
+
+const ApiPublicWidgetIdRouteChildren: ApiPublicWidgetIdRouteChildren = {
+  ApiPublicWidgetIdChatRoute: ApiPublicWidgetIdChatRoute,
+}
+
+const ApiPublicWidgetIdRouteWithChildren =
+  ApiPublicWidgetIdRoute._addFileChildren(ApiPublicWidgetIdRouteChildren)
 
 interface ApiPublicV1FilesIdRouteChildren {
   ApiPublicV1FilesIdSignedUrlRoute: typeof ApiPublicV1FilesIdSignedUrlRoute
@@ -2114,6 +2205,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlaygroundRoute: PlaygroundRoute,
   PostmanDotjsonRoute: PostmanDotjsonRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WidgetDotjsRoute: WidgetDotjsRoute,
   DotwellKnownEgreedCloudDotjsonRoute: DotwellKnownEgreedCloudDotjsonRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
@@ -2148,6 +2240,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicV1OpenapiDotjsonRoute: ApiPublicV1OpenapiDotjsonRoute,
   ApiPublicV1OpenapiDotyamlRoute: ApiPublicV1OpenapiDotyamlRoute,
   ApiPublicV1ReadyRoute: ApiPublicV1ReadyRoute,
+  ApiPublicWidgetIdRoute: ApiPublicWidgetIdRouteWithChildren,
   ApiV1FilesIdRoute: ApiV1FilesIdRoute,
   ApiPublicV1IndexRoute: ApiPublicV1IndexRoute,
   ApiV1FilesIndexRoute: ApiV1FilesIndexRoute,

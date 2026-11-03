@@ -732,6 +732,63 @@ export type Database = {
           },
         ]
       }
+      model_widgets: {
+        Row: {
+          allowed_origins: string[]
+          created_at: string
+          file_id: string | null
+          greeting: string
+          id: string
+          inference_url: string | null
+          is_active: boolean
+          max_tokens: number
+          name: string
+          owner_id: string
+          primary_color: string
+          system_prompt: string
+          temperature: number
+          theme: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          allowed_origins?: string[]
+          created_at?: string
+          file_id?: string | null
+          greeting?: string
+          id?: string
+          inference_url?: string | null
+          is_active?: boolean
+          max_tokens?: number
+          name: string
+          owner_id: string
+          primary_color?: string
+          system_prompt?: string
+          temperature?: number
+          theme?: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          allowed_origins?: string[]
+          created_at?: string
+          file_id?: string | null
+          greeting?: string
+          id?: string
+          inference_url?: string | null
+          is_active?: boolean
+          max_tokens?: number
+          name?: string
+          owner_id?: string
+          primary_color?: string
+          system_prompt?: string
+          temperature?: number
+          theme?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
