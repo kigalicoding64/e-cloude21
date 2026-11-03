@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/public/widget/$id/chat")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data: w } = await supabaseAdmin
           .from("model_widgets")
-          .select("id, is_active, allowed_origins, inference_url, system_prompt, temperature, max_tokens, files(name)")
+          .select("id, is_active, allowed_origins, inference_url, system_prompt, temperature, max_tokens, file_id")
           .eq("id", params.id)
           .maybeSingle();
         if (!w || !w.is_active) return j({ error: "not_found" }, 404);
@@ -50,7 +50,11 @@ export const Route = createFileRoute("/api/public/widget/$id/chat")({
           return j({ error: "model_offline", message: "This assistant is not connected to a model server yet." }, 503);
 
         const base = w.inference_url.replace(/\/+$/, "").replace(/\/v1$/, "");
-        const modelName = (w as { files?: { name?: string } | null }).files?.name ?? "model";
+        let modelName = "model";
+        if (w.file_id) {
+          const { data: f } = await supabaseAdmin.from("files").select("name").eq("id", w.file_id).maybeSingle();
+          if (f?.name) modelName = f.name;
+        }
         let upstream: Response;
         try {
           upstream = await fetch(`${base}/v1/chat/completions`, {
