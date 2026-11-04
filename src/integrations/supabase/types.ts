@@ -456,6 +456,54 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_provider_keys: {
+        Row: {
+          base_url: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          key_ciphertext: string
+          key_hint: string
+          key_iv: string
+          label: string
+          last_used_at: string | null
+          owner_id: string
+          provider: string
+          request_count: number
+          updated_at: string
+        }
+        Insert: {
+          base_url?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_ciphertext: string
+          key_hint?: string
+          key_iv: string
+          label: string
+          last_used_at?: string | null
+          owner_id: string
+          provider: string
+          request_count?: number
+          updated_at?: string
+        }
+        Update: {
+          base_url?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_ciphertext?: string
+          key_hint?: string
+          key_iv?: string
+          label?: string
+          last_used_at?: string | null
+          owner_id?: string
+          provider?: string
+          request_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       api_idempotency_records: {
         Row: {
           api_key_id: string | null
