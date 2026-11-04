@@ -105,6 +105,7 @@ import { Route as ApiPublicV1UploadsIdRouteImport } from './routes/api/public/v1
 import { Route as ApiPublicV1UploadsInitRouteImport } from './routes/api/public/v1/uploads/init'
 import { Route as ApiPublicWidgetIdChatRouteImport } from './routes/api/public/widget/$id.chat'
 import { Route as ApiPublicV1AgentJobsNextRouteImport } from './routes/api/public/v1/agent/jobs.next'
+import { Route as ApiPublicV1AiChatCompletionsRouteImport } from './routes/api/public/v1/ai/chat/completions'
 import { Route as ApiPublicV1FilesIdSignedUrlRouteImport } from './routes/api/public/v1/files/$id.signed-url'
 import { Route as ApiPublicV1UploadsIdCompleteRouteImport } from './routes/api/public/v1/uploads/$id.complete'
 import { Route as ApiPublicV1AgentDeploymentsIdLogsRouteImport } from './routes/api/public/v1/agent/deployments.$id.logs'
@@ -612,6 +613,12 @@ const ApiPublicV1AgentJobsNextRoute =
     path: '/api/public/v1/agent/jobs/next',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicV1AiChatCompletionsRoute =
+  ApiPublicV1AiChatCompletionsRouteImport.update({
+    id: '/api/public/v1/ai/chat/completions',
+    path: '/api/public/v1/ai/chat/completions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicV1FilesIdSignedUrlRoute =
   ApiPublicV1FilesIdSignedUrlRouteImport.update({
     id: '/signed-url',
@@ -745,6 +752,7 @@ export interface FileRoutesByFullPath {
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -848,6 +856,7 @@ export interface FileRoutesByTo {
   '/api/public/v1/files': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -953,6 +962,7 @@ export interface FileRoutesById {
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -1058,6 +1068,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1161,6 +1172,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files'
     | '/api/public/v1/folders'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1265,6 +1277,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1344,6 +1357,7 @@ export interface RootRouteChildren {
   ApiPublicV1FilesIndexRoute: typeof ApiPublicV1FilesIndexRoute
   ApiPublicV1FoldersIndexRoute: typeof ApiPublicV1FoldersIndexRoute
   ApiPublicV1AgentJobsNextRoute: typeof ApiPublicV1AgentJobsNextRoute
+  ApiPublicV1AiChatCompletionsRoute: typeof ApiPublicV1AiChatCompletionsRoute
   ApiPublicV1AgentDeploymentsIdLogsRoute: typeof ApiPublicV1AgentDeploymentsIdLogsRoute
   ApiPublicV1AgentDeploymentsIdMetricsRoute: typeof ApiPublicV1AgentDeploymentsIdMetricsRoute
   ApiPublicV1AgentDeploymentsIdStatusRoute: typeof ApiPublicV1AgentDeploymentsIdStatusRoute
@@ -2023,6 +2037,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1AgentJobsNextRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/ai/chat/completions': {
+      id: '/api/public/v1/ai/chat/completions'
+      path: '/api/public/v1/ai/chat/completions'
+      fullPath: '/api/public/v1/ai/chat/completions'
+      preLoaderRoute: typeof ApiPublicV1AiChatCompletionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/v1/files/$id/signed-url': {
       id: '/api/public/v1/files/$id/signed-url'
       path: '/signed-url'
@@ -2258,6 +2279,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicV1FilesIndexRoute: ApiPublicV1FilesIndexRoute,
   ApiPublicV1FoldersIndexRoute: ApiPublicV1FoldersIndexRoute,
   ApiPublicV1AgentJobsNextRoute: ApiPublicV1AgentJobsNextRoute,
+  ApiPublicV1AiChatCompletionsRoute: ApiPublicV1AiChatCompletionsRoute,
   ApiPublicV1AgentDeploymentsIdLogsRoute:
     ApiPublicV1AgentDeploymentsIdLogsRoute,
   ApiPublicV1AgentDeploymentsIdMetricsRoute:
