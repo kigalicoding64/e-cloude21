@@ -8,8 +8,8 @@ function b64(buf: ArrayBuffer | Uint8Array): string {
   for (const b of bytes) s += String.fromCharCode(b);
   return btoa(s);
 }
-function unb64(s: string): Uint8Array {
-  return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+function unb64(s: string): Uint8Array<ArrayBuffer> {
+  return new Uint8Array(Array.from(atob(s), (c) => c.charCodeAt(0)));
 }
 
 async function vaultKey(): Promise<CryptoKey> {
