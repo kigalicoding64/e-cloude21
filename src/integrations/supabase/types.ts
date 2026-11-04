@@ -504,6 +504,59 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_provider_requests: {
+        Row: {
+          completion_tokens: number | null
+          created_at: string
+          estimated_cost_usd: number | null
+          id: string
+          key_id: string | null
+          latency_ms: number
+          model: string
+          owner_id: string
+          prompt_tokens: number | null
+          provider: string
+          status: number
+          streamed: boolean
+        }
+        Insert: {
+          completion_tokens?: number | null
+          created_at?: string
+          estimated_cost_usd?: number | null
+          id?: string
+          key_id?: string | null
+          latency_ms?: number
+          model: string
+          owner_id: string
+          prompt_tokens?: number | null
+          provider: string
+          status: number
+          streamed?: boolean
+        }
+        Update: {
+          completion_tokens?: number | null
+          created_at?: string
+          estimated_cost_usd?: number | null
+          id?: string
+          key_id?: string | null
+          latency_ms?: number
+          model?: string
+          owner_id?: string
+          prompt_tokens?: number | null
+          provider?: string
+          status?: number
+          streamed?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_provider_requests_key_id_fkey"
+            columns: ["key_id"]
+            isOneToOne: false
+            referencedRelation: "ai_provider_keys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       api_idempotency_records: {
         Row: {
           api_key_id: string | null
