@@ -49,6 +49,7 @@ const groups: { label: string; items: NavItem[] }[] = [
       { to: "/ai/models", label: "Models", icon: Brain },
       { to: "/ai/deployments", label: "Deployments", icon: Rocket },
       { to: "/ai/widgets", label: "Model Widgets", icon: Brain },
+      { to: "/ai/provider-keys", label: "Provider Keys", icon: Brain },
     ],
   },
   {

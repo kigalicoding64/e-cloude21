@@ -64,6 +64,7 @@ import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.
 import { Route as AuthenticatedAiDeploymentsRouteImport } from './routes/_authenticated/ai.deployments'
 import { Route as AuthenticatedAiModelsRouteImport } from './routes/_authenticated/ai.models'
 import { Route as AuthenticatedAiOrchestratorsRouteImport } from './routes/_authenticated/ai.orchestrators'
+import { Route as AuthenticatedAiProviderKeysRouteImport } from './routes/_authenticated/ai.provider-keys'
 import { Route as AuthenticatedAiWidgetsRouteImport } from './routes/_authenticated/ai.widgets'
 import { Route as AuthenticatedOrganizationsIdRouteImport } from './routes/_authenticated/organizations.$id'
 import { Route as ApiFilesIndexRouteImport } from './routes/api/files/index'
@@ -105,6 +106,7 @@ import { Route as ApiPublicV1UploadsIdRouteImport } from './routes/api/public/v1
 import { Route as ApiPublicV1UploadsInitRouteImport } from './routes/api/public/v1/uploads/init'
 import { Route as ApiPublicWidgetIdChatRouteImport } from './routes/api/public/widget/$id.chat'
 import { Route as ApiPublicV1AgentJobsNextRouteImport } from './routes/api/public/v1/agent/jobs.next'
+import { Route as ApiPublicV1AiChatCompletionsRouteImport } from './routes/api/public/v1/ai/chat/completions'
 import { Route as ApiPublicV1FilesIdSignedUrlRouteImport } from './routes/api/public/v1/files/$id.signed-url'
 import { Route as ApiPublicV1UploadsIdCompleteRouteImport } from './routes/api/public/v1/uploads/$id.complete'
 import { Route as ApiPublicV1AgentDeploymentsIdLogsRouteImport } from './routes/api/public/v1/agent/deployments.$id.logs'
@@ -397,6 +399,12 @@ const AuthenticatedAiOrchestratorsRoute =
     path: '/ai/orchestrators',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAiProviderKeysRoute =
+  AuthenticatedAiProviderKeysRouteImport.update({
+    id: '/ai/provider-keys',
+    path: '/ai/provider-keys',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAiWidgetsRoute = AuthenticatedAiWidgetsRouteImport.update({
   id: '/ai/widgets',
   path: '/ai/widgets',
@@ -612,6 +620,12 @@ const ApiPublicV1AgentJobsNextRoute =
     path: '/api/public/v1/agent/jobs/next',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicV1AiChatCompletionsRoute =
+  ApiPublicV1AiChatCompletionsRouteImport.update({
+    id: '/api/public/v1/ai/chat/completions',
+    path: '/api/public/v1/ai/chat/completions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicV1FilesIdSignedUrlRoute =
   ApiPublicV1FilesIdSignedUrlRouteImport.update({
     id: '/signed-url',
@@ -704,6 +718,7 @@ export interface FileRoutesByFullPath {
   '/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -745,6 +760,7 @@ export interface FileRoutesByFullPath {
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -807,6 +823,7 @@ export interface FileRoutesByTo {
   '/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -848,6 +865,7 @@ export interface FileRoutesByTo {
   '/api/public/v1/files': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -912,6 +930,7 @@ export interface FileRoutesById {
   '/_authenticated/ai/deployments': typeof AuthenticatedAiDeploymentsRoute
   '/_authenticated/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/_authenticated/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
+  '/_authenticated/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/_authenticated/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/_authenticated/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -953,6 +972,7 @@ export interface FileRoutesById {
   '/api/public/v1/files/': typeof ApiPublicV1FilesIndexRoute
   '/api/public/v1/folders/': typeof ApiPublicV1FoldersIndexRoute
   '/api/public/v1/agent/jobs/next': typeof ApiPublicV1AgentJobsNextRoute
+  '/api/public/v1/ai/chat/completions': typeof ApiPublicV1AiChatCompletionsRoute
   '/api/public/v1/files/$id/signed-url': typeof ApiPublicV1FilesIdSignedUrlRoute
   '/api/public/v1/uploads/$id/complete': typeof ApiPublicV1UploadsIdCompleteRoute
   '/api/public/v1/agent/deployments/$id/logs': typeof ApiPublicV1AgentDeploymentsIdLogsRoute
@@ -1017,6 +1037,7 @@ export interface FileRouteTypes {
     | '/ai/deployments'
     | '/ai/models'
     | '/ai/orchestrators'
+    | '/ai/provider-keys'
     | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
@@ -1058,6 +1079,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1120,6 +1142,7 @@ export interface FileRouteTypes {
     | '/ai/deployments'
     | '/ai/models'
     | '/ai/orchestrators'
+    | '/ai/provider-keys'
     | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
@@ -1161,6 +1184,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files'
     | '/api/public/v1/folders'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1224,6 +1248,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai/deployments'
     | '/_authenticated/ai/models'
     | '/_authenticated/ai/orchestrators'
+    | '/_authenticated/ai/provider-keys'
     | '/_authenticated/ai/widgets'
     | '/_authenticated/organizations/$id'
     | '/api/files/$id'
@@ -1265,6 +1290,7 @@ export interface FileRouteTypes {
     | '/api/public/v1/files/'
     | '/api/public/v1/folders/'
     | '/api/public/v1/agent/jobs/next'
+    | '/api/public/v1/ai/chat/completions'
     | '/api/public/v1/files/$id/signed-url'
     | '/api/public/v1/uploads/$id/complete'
     | '/api/public/v1/agent/deployments/$id/logs'
@@ -1344,6 +1370,7 @@ export interface RootRouteChildren {
   ApiPublicV1FilesIndexRoute: typeof ApiPublicV1FilesIndexRoute
   ApiPublicV1FoldersIndexRoute: typeof ApiPublicV1FoldersIndexRoute
   ApiPublicV1AgentJobsNextRoute: typeof ApiPublicV1AgentJobsNextRoute
+  ApiPublicV1AiChatCompletionsRoute: typeof ApiPublicV1AiChatCompletionsRoute
   ApiPublicV1AgentDeploymentsIdLogsRoute: typeof ApiPublicV1AgentDeploymentsIdLogsRoute
   ApiPublicV1AgentDeploymentsIdMetricsRoute: typeof ApiPublicV1AgentDeploymentsIdMetricsRoute
   ApiPublicV1AgentDeploymentsIdStatusRoute: typeof ApiPublicV1AgentDeploymentsIdStatusRoute
@@ -1736,6 +1763,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiOrchestratorsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ai/provider-keys': {
+      id: '/_authenticated/ai/provider-keys'
+      path: '/ai/provider-keys'
+      fullPath: '/ai/provider-keys'
+      preLoaderRoute: typeof AuthenticatedAiProviderKeysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ai/widgets': {
       id: '/_authenticated/ai/widgets'
       path: '/ai/widgets'
@@ -2023,6 +2057,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1AgentJobsNextRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/ai/chat/completions': {
+      id: '/api/public/v1/ai/chat/completions'
+      path: '/api/public/v1/ai/chat/completions'
+      fullPath: '/api/public/v1/ai/chat/completions'
+      preLoaderRoute: typeof ApiPublicV1AiChatCompletionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/v1/files/$id/signed-url': {
       id: '/api/public/v1/files/$id/signed-url'
       path: '/signed-url'
@@ -2118,6 +2159,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiDeploymentsRoute: typeof AuthenticatedAiDeploymentsRoute
   AuthenticatedAiModelsRoute: typeof AuthenticatedAiModelsRouteWithChildren
   AuthenticatedAiOrchestratorsRoute: typeof AuthenticatedAiOrchestratorsRoute
+  AuthenticatedAiProviderKeysRoute: typeof AuthenticatedAiProviderKeysRoute
   AuthenticatedAiWidgetsRoute: typeof AuthenticatedAiWidgetsRoute
 }
 
@@ -2144,6 +2186,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAiDeploymentsRoute: AuthenticatedAiDeploymentsRoute,
   AuthenticatedAiModelsRoute: AuthenticatedAiModelsRouteWithChildren,
   AuthenticatedAiOrchestratorsRoute: AuthenticatedAiOrchestratorsRoute,
+  AuthenticatedAiProviderKeysRoute: AuthenticatedAiProviderKeysRoute,
   AuthenticatedAiWidgetsRoute: AuthenticatedAiWidgetsRoute,
 }
 
@@ -2258,6 +2301,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicV1FilesIndexRoute: ApiPublicV1FilesIndexRoute,
   ApiPublicV1FoldersIndexRoute: ApiPublicV1FoldersIndexRoute,
   ApiPublicV1AgentJobsNextRoute: ApiPublicV1AgentJobsNextRoute,
+  ApiPublicV1AiChatCompletionsRoute: ApiPublicV1AiChatCompletionsRoute,
   ApiPublicV1AgentDeploymentsIdLogsRoute:
     ApiPublicV1AgentDeploymentsIdLogsRoute,
   ApiPublicV1AgentDeploymentsIdMetricsRoute:
