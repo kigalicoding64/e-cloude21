@@ -16,15 +16,15 @@ export const Route = createFileRoute("/api/public/v1/ai/chat/completions")({
         try {
           body = (await request.json()) as Record<string, unknown>;
         } catch {
-          return apiError("invalid_request", "Body must be JSON.");
+          return apiError("invalid_json", "Body must be JSON.");
         }
         const ref = parseModelRef(body.model);
         if (!ref) {
-          return apiError("invalid_request", "model must look like 'provider/model', e.g. 'openai/gpt-4o-mini'.", {
+          return apiError("validation_failed", "model must look like 'provider/model', e.g. 'openai/gpt-4o-mini'.", {
             providers: Object.keys(PROVIDERS),
           });
         }
-        if (!Array.isArray(body.messages)) return apiError("invalid_request", "messages must be an array.");
+        if (!Array.isArray(body.messages)) return apiError("validation_failed", "messages must be an array.");
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data: row } = await supabaseAdmin
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/public/v1/ai/chat/completions")({
           return apiError("not_found", `No active ${PROVIDERS[ref.provider].name} key stored. Add one in AI Hub → Provider Keys.`);
         }
         const base = (row.base_url || PROVIDERS[ref.provider].baseUrl).replace(/\/+$/, "");
-        if (!isSafeBaseUrl(base)) return apiError("invalid_request", "Stored base URL is not allowed.");
+        if (!isSafeBaseUrl(base)) return apiError("validation_failed", "Stored base URL is not allowed.");
 
         const { decryptSecret } = await import("@/lib/ai-vault.server");
         const key = await decryptSecret(row.key_ciphertext, row.key_iv);
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/api/public/v1/ai/chat/completions")({
             body: JSON.stringify({ ...body, model: ref.model }),
           });
         } catch {
-          return apiError("upstream_error" as never, "Could not reach the AI provider.");
+          return apiError("service_unavailable", "Could not reach the AI provider.");
         }
         supabaseAdmin
           .from("ai_provider_keys")
