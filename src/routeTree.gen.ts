@@ -65,6 +65,7 @@ import { Route as AuthenticatedAiDeploymentsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAiModelsRouteImport } from './routes/_authenticated/ai.models'
 import { Route as AuthenticatedAiOrchestratorsRouteImport } from './routes/_authenticated/ai.orchestrators'
 import { Route as AuthenticatedAiProviderKeysRouteImport } from './routes/_authenticated/ai.provider-keys'
+import { Route as AuthenticatedAiUsageRouteImport } from './routes/_authenticated/ai.usage'
 import { Route as AuthenticatedAiWidgetsRouteImport } from './routes/_authenticated/ai.widgets'
 import { Route as AuthenticatedOrganizationsIdRouteImport } from './routes/_authenticated/organizations.$id'
 import { Route as ApiFilesIndexRouteImport } from './routes/api/files/index'
@@ -405,6 +406,11 @@ const AuthenticatedAiProviderKeysRoute =
     path: '/ai/provider-keys',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAiUsageRoute = AuthenticatedAiUsageRouteImport.update({
+  id: '/ai/usage',
+  path: '/ai/usage',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAiWidgetsRoute = AuthenticatedAiWidgetsRouteImport.update({
   id: '/ai/widgets',
   path: '/ai/widgets',
@@ -719,6 +725,7 @@ export interface FileRoutesByFullPath {
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
   '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
+  '/ai/usage': typeof AuthenticatedAiUsageRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -824,6 +831,7 @@ export interface FileRoutesByTo {
   '/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
   '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
+  '/ai/usage': typeof AuthenticatedAiUsageRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -931,6 +939,7 @@ export interface FileRoutesById {
   '/_authenticated/ai/models': typeof AuthenticatedAiModelsRouteWithChildren
   '/_authenticated/ai/orchestrators': typeof AuthenticatedAiOrchestratorsRoute
   '/_authenticated/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
+  '/_authenticated/ai/usage': typeof AuthenticatedAiUsageRoute
   '/_authenticated/ai/widgets': typeof AuthenticatedAiWidgetsRoute
   '/_authenticated/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
@@ -1038,6 +1047,7 @@ export interface FileRouteTypes {
     | '/ai/models'
     | '/ai/orchestrators'
     | '/ai/provider-keys'
+    | '/ai/usage'
     | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
@@ -1143,6 +1153,7 @@ export interface FileRouteTypes {
     | '/ai/models'
     | '/ai/orchestrators'
     | '/ai/provider-keys'
+    | '/ai/usage'
     | '/ai/widgets'
     | '/organizations/$id'
     | '/api/files/$id'
@@ -1249,6 +1260,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai/models'
     | '/_authenticated/ai/orchestrators'
     | '/_authenticated/ai/provider-keys'
+    | '/_authenticated/ai/usage'
     | '/_authenticated/ai/widgets'
     | '/_authenticated/organizations/$id'
     | '/api/files/$id'
@@ -1770,6 +1782,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiProviderKeysRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ai/usage': {
+      id: '/_authenticated/ai/usage'
+      path: '/ai/usage'
+      fullPath: '/ai/usage'
+      preLoaderRoute: typeof AuthenticatedAiUsageRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ai/widgets': {
       id: '/_authenticated/ai/widgets'
       path: '/ai/widgets'
@@ -2160,6 +2179,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiModelsRoute: typeof AuthenticatedAiModelsRouteWithChildren
   AuthenticatedAiOrchestratorsRoute: typeof AuthenticatedAiOrchestratorsRoute
   AuthenticatedAiProviderKeysRoute: typeof AuthenticatedAiProviderKeysRoute
+  AuthenticatedAiUsageRoute: typeof AuthenticatedAiUsageRoute
   AuthenticatedAiWidgetsRoute: typeof AuthenticatedAiWidgetsRoute
 }
 
@@ -2187,6 +2207,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAiModelsRoute: AuthenticatedAiModelsRouteWithChildren,
   AuthenticatedAiOrchestratorsRoute: AuthenticatedAiOrchestratorsRoute,
   AuthenticatedAiProviderKeysRoute: AuthenticatedAiProviderKeysRoute,
+  AuthenticatedAiUsageRoute: AuthenticatedAiUsageRoute,
   AuthenticatedAiWidgetsRoute: AuthenticatedAiWidgetsRoute,
 }
 
