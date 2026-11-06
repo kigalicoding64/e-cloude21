@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { CORS_HEADERS, corsPreflight } from "@/lib/cors";
 import { isSafeInferenceUrl, originAllowed } from "@/lib/model-widget";
+import { buildSystemPrompt } from "@/lib/widget-knowledge";
 
 const Body = z.object({
   messages: z
@@ -40,7 +41,7 @@ export const Route = createFileRoute("/api/public/widget/$id/chat")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data: w } = await supabaseAdmin
           .from("model_widgets")
-          .select("id, is_active, allowed_origins, inference_url, system_prompt, temperature, max_tokens, file_id")
+          .select("id, is_active, allowed_origins, inference_url, system_prompt, knowledge, temperature, max_tokens, file_id")
           .eq("id", params.id)
           .maybeSingle();
         if (!w || !w.is_active) return j({ error: "not_found" }, 404);
@@ -65,7 +66,7 @@ export const Route = createFileRoute("/api/public/widget/$id/chat")({
               stream: true,
               temperature: Number(w.temperature),
               max_tokens: w.max_tokens,
-              messages: [{ role: "system", content: w.system_prompt }, ...parsed.data.messages],
+              messages: [{ role: "system", content: buildSystemPrompt(w.system_prompt, w.knowledge ?? "") }, ...parsed.data.messages],
             }),
             signal: AbortSignal.timeout(60_000),
           });
