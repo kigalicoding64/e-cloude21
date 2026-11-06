@@ -146,6 +146,7 @@ function WidgetsPage() {
                   update(w.id, { inference_url: v || null }).then(() => toast.success("Saved"));
                 }}>Save server</Button>
               </div>
+              <KnowledgeEditor widget={w} onSaved={() => qc.invalidateQueries({ queryKey: ["model-widgets"] })} />
               <pre className="overflow-x-auto rounded-md bg-muted p-3 text-xs">{code}</pre>
               <Button size="sm" onClick={() => { navigator.clipboard.writeText(code); toast.success("Code copied"); }}>
                 <Copy className="mr-2 h-4 w-4" /> Copy website code
