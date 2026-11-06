@@ -12,6 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { Copy, Trash2, MessageSquare } from "lucide-react";
 import { PUBLIC_BASE_URL } from "@/lib/site";
 import { formatBytes } from "@/lib/format";
+import { useServerFn } from "@tanstack/react-start";
+import { readWebsite } from "@/lib/widget-knowledge.functions";
+import { KNOWLEDGE_MAX_CHARS } from "@/lib/widget-knowledge";
 import { isGgufFile, ggufQuant, isSafeInferenceUrl, widgetSnippet } from "@/lib/model-widget";
 
 export const Route = createFileRoute("/_authenticated/ai/widgets")({
@@ -154,6 +157,86 @@ function WidgetsPage() {
             </Card>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+type KnowledgeSource = { kind: "file" | "website"; name: string; chars: number };
+
+function KnowledgeEditor({
+  widget,
+  onSaved,
+}: {
+  widget: { id: string; knowledge: string; knowledge_sources: unknown };
+  onSaved: () => void;
+}) {
+  const read = useServerFn(readWebsite);
+  const [text, setText] = useState(widget.knowledge ?? "");
+  const [sources, setSources] = useState<KnowledgeSource[]>(
+    Array.isArray(widget.knowledge_sources) ? (widget.knowledge_sources as KnowledgeSource[]) : [],
+  );
+  const [url, setUrl] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const add = (kind: KnowledgeSource["kind"], name: string, body: string) => {
+    setText((t) => `${t}${t ? "\n\n" : ""}## Source: ${name}\n${body}`.slice(0, KNOWLEDGE_MAX_CHARS));
+    setSources((s) => [...s, { kind, name, chars: body.length }]);
+  };
+
+  async function onFiles(files: FileList | null) {
+    for (const f of Array.from(files ?? [])) {
+      if (!/\.(txt|md|csv)$/i.test(f.name)) { toast.error(`${f.name}: only .txt, .md or .csv`); continue; }
+      add("file", f.name, await f.text());
+    }
+  }
+
+  async function onWebsite() {
+    setBusy(true);
+    try {
+      const r = await read({ data: { url: url.trim() } });
+      if (!r.ok) return toast.error(r.error);
+      add("website", url.trim(), r.text);
+      toast.success(`Read ${r.pages} page(s)`);
+      setUrl("");
+    } catch {
+      toast.error("Could not read that website.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function save() {
+    const { error } = await supabase
+      .from("model_widgets")
+      .update({ knowledge: text.slice(0, KNOWLEDGE_MAX_CHARS), knowledge_sources: sources })
+      .eq("id", widget.id);
+    if (error) return toast.error(error.message);
+    toast.success("Assistant knowledge saved");
+    onSaved();
+  }
+
+  return (
+    <div className="space-y-2 rounded-md border border-border p-3">
+      <div className="text-sm font-medium">What should this assistant know?</div>
+      <p className="text-xs text-muted-foreground">Upload text files or add your website. The assistant answers only from this information.</p>
+      <div className="flex flex-wrap gap-2">
+        <Input type="file" accept=".txt,.md,.csv" multiple className="max-w-xs" onChange={(e) => onFiles(e.target.files)} />
+        <Input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://yourbusiness.com" className="max-w-xs" />
+        <Button size="sm" variant="secondary" disabled={busy || !url.trim()} onClick={onWebsite}>
+          {busy ? "Reading…" : "Read website"}
+        </Button>
+      </div>
+      {sources.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {sources.map((s, i) => <Badge key={i} variant="outline">{s.kind === "website" ? "🌐" : "📄"} {s.name}</Badge>)}
+        </div>
+      )}
+      <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} placeholder="Or type facts here: opening hours, prices, services…" />
+      <div className="flex items-center gap-2">
+        <Button size="sm" onClick={save}>Save knowledge</Button>
+        <Button size="sm" variant="ghost" onClick={() => { setText(""); setSources([]); }}>Clear</Button>
+        <span className="ml-auto text-xs text-muted-foreground">{text.length.toLocaleString()} / {KNOWLEDGE_MAX_CHARS.toLocaleString()} characters</span>
       </div>
     </div>
   );
