@@ -842,6 +842,8 @@ export type Database = {
           id: string
           inference_url: string | null
           is_active: boolean
+          knowledge: string
+          knowledge_sources: Json
           max_tokens: number
           name: string
           owner_id: string
@@ -860,6 +862,8 @@ export type Database = {
           id?: string
           inference_url?: string | null
           is_active?: boolean
+          knowledge?: string
+          knowledge_sources?: Json
           max_tokens?: number
           name: string
           owner_id: string
@@ -878,6 +882,8 @@ export type Database = {
           id?: string
           inference_url?: string | null
           is_active?: boolean
+          knowledge?: string
+          knowledge_sources?: Json
           max_tokens?: number
           name?: string
           owner_id?: string

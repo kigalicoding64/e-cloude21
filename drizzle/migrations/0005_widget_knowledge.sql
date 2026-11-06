@@ -1,0 +1,2 @@
+ALTER TABLE public.model_widgets ADD COLUMN IF NOT EXISTS knowledge text NOT NULL DEFAULT '';
+ALTER TABLE public.model_widgets ADD COLUMN IF NOT EXISTS knowledge_sources jsonb NOT NULL DEFAULT '[]'::jsonb;
