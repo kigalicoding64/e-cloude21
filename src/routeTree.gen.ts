@@ -50,6 +50,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedShareDiagnosticsRouteImport } from './routes/_authenticated/share-diagnostics'
 import { Route as AuthenticatedSharedRouteImport } from './routes/_authenticated/shared'
 import { Route as AuthenticatedStorageAnalyticsRouteImport } from './routes/_authenticated/storage-analytics'
+import { Route as AuthenticatedStorageCalculatorRouteImport } from './routes/_authenticated/storage-calculator'
 import { Route as AuthenticatedTrashRouteImport } from './routes/_authenticated/trash'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
@@ -97,12 +98,15 @@ import { Route as ApiPublicV1AgentHeartbeatRouteImport } from './routes/api/publ
 import { Route as ApiPublicV1ChatSlugRouteImport } from './routes/api/public/v1/chat.$slug'
 import { Route as ApiPublicV1FilesIndexRouteImport } from './routes/api/public/v1/files/index'
 import { Route as ApiPublicV1FilesIdRouteImport } from './routes/api/public/v1/files/$id'
+import { Route as ApiPublicV1FilesBatchRouteImport } from './routes/api/public/v1/files/batch'
 import { Route as ApiPublicV1FilesCommitRouteImport } from './routes/api/public/v1/files/commit'
+import { Route as ApiPublicV1FilesImportUrlRouteImport } from './routes/api/public/v1/files/import-url'
 import { Route as ApiPublicV1FilesUploadRouteImport } from './routes/api/public/v1/files/upload'
 import { Route as ApiPublicV1FilesUploadUrlRouteImport } from './routes/api/public/v1/files/upload-url'
 import { Route as ApiPublicV1FoldersIndexRouteImport } from './routes/api/public/v1/folders/index'
 import { Route as ApiPublicV1FoldersIdRouteImport } from './routes/api/public/v1/folders/$id'
 import { Route as ApiPublicV1SharesTokenRouteImport } from './routes/api/public/v1/shares/$token'
+import { Route as ApiPublicV1StorageUsageRouteImport } from './routes/api/public/v1/storage/usage'
 import { Route as ApiPublicV1UploadsIdRouteImport } from './routes/api/public/v1/uploads/$id'
 import { Route as ApiPublicV1UploadsInitRouteImport } from './routes/api/public/v1/uploads/init'
 import { Route as ApiPublicWidgetIdChatRouteImport } from './routes/api/public/widget/$id.chat'
@@ -326,6 +330,12 @@ const AuthenticatedStorageAnalyticsRoute =
   AuthenticatedStorageAnalyticsRouteImport.update({
     id: '/storage-analytics',
     path: '/storage-analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStorageCalculatorRoute =
+  AuthenticatedStorageCalculatorRouteImport.update({
+    id: '/storage-calculator',
+    path: '/storage-calculator',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedTrashRoute = AuthenticatedTrashRouteImport.update({
@@ -574,11 +584,22 @@ const ApiPublicV1FilesIdRoute = ApiPublicV1FilesIdRouteImport.update({
   path: '/api/public/v1/files/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1FilesBatchRoute = ApiPublicV1FilesBatchRouteImport.update({
+  id: '/api/public/v1/files/batch',
+  path: '/api/public/v1/files/batch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicV1FilesCommitRoute = ApiPublicV1FilesCommitRouteImport.update({
   id: '/api/public/v1/files/commit',
   path: '/api/public/v1/files/commit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1FilesImportUrlRoute =
+  ApiPublicV1FilesImportUrlRouteImport.update({
+    id: '/api/public/v1/files/import-url',
+    path: '/api/public/v1/files/import-url',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicV1FilesUploadRoute = ApiPublicV1FilesUploadRouteImport.update({
   id: '/api/public/v1/files/upload',
   path: '/api/public/v1/files/upload',
@@ -603,6 +624,11 @@ const ApiPublicV1FoldersIdRoute = ApiPublicV1FoldersIdRouteImport.update({
 const ApiPublicV1SharesTokenRoute = ApiPublicV1SharesTokenRouteImport.update({
   id: '/api/public/v1/shares/$token',
   path: '/api/public/v1/shares/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicV1StorageUsageRoute = ApiPublicV1StorageUsageRouteImport.update({
+  id: '/api/public/v1/storage/usage',
+  path: '/api/public/v1/storage/usage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicV1UploadsIdRoute = ApiPublicV1UploadsIdRouteImport.update({
@@ -710,6 +736,7 @@ export interface FileRoutesByFullPath {
   '/share-diagnostics': typeof AuthenticatedShareDiagnosticsRoute
   '/shared': typeof AuthenticatedSharedRoute
   '/storage-analytics': typeof AuthenticatedStorageAnalyticsRoute
+  '/storage-calculator': typeof AuthenticatedStorageCalculatorRoute
   '/trash': typeof AuthenticatedTrashRoute
   '/api/$': typeof ApiSplatRoute
   '/api/health': typeof ApiHealthRoute
@@ -756,11 +783,14 @@ export interface FileRoutesByFullPath {
   '/api/public/v1/agent/heartbeat': typeof ApiPublicV1AgentHeartbeatRoute
   '/api/public/v1/chat/$slug': typeof ApiPublicV1ChatSlugRoute
   '/api/public/v1/files/$id': typeof ApiPublicV1FilesIdRouteWithChildren
+  '/api/public/v1/files/batch': typeof ApiPublicV1FilesBatchRoute
   '/api/public/v1/files/commit': typeof ApiPublicV1FilesCommitRoute
+  '/api/public/v1/files/import-url': typeof ApiPublicV1FilesImportUrlRoute
   '/api/public/v1/files/upload': typeof ApiPublicV1FilesUploadRoute
   '/api/public/v1/files/upload-url': typeof ApiPublicV1FilesUploadUrlRoute
   '/api/public/v1/folders/$id': typeof ApiPublicV1FoldersIdRoute
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
+  '/api/public/v1/storage/usage': typeof ApiPublicV1StorageUsageRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
   '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
@@ -816,6 +846,7 @@ export interface FileRoutesByTo {
   '/share-diagnostics': typeof AuthenticatedShareDiagnosticsRoute
   '/shared': typeof AuthenticatedSharedRoute
   '/storage-analytics': typeof AuthenticatedStorageAnalyticsRoute
+  '/storage-calculator': typeof AuthenticatedStorageCalculatorRoute
   '/trash': typeof AuthenticatedTrashRoute
   '/api/$': typeof ApiSplatRoute
   '/api/health': typeof ApiHealthRoute
@@ -862,11 +893,14 @@ export interface FileRoutesByTo {
   '/api/public/v1/agent/heartbeat': typeof ApiPublicV1AgentHeartbeatRoute
   '/api/public/v1/chat/$slug': typeof ApiPublicV1ChatSlugRoute
   '/api/public/v1/files/$id': typeof ApiPublicV1FilesIdRouteWithChildren
+  '/api/public/v1/files/batch': typeof ApiPublicV1FilesBatchRoute
   '/api/public/v1/files/commit': typeof ApiPublicV1FilesCommitRoute
+  '/api/public/v1/files/import-url': typeof ApiPublicV1FilesImportUrlRoute
   '/api/public/v1/files/upload': typeof ApiPublicV1FilesUploadRoute
   '/api/public/v1/files/upload-url': typeof ApiPublicV1FilesUploadUrlRoute
   '/api/public/v1/folders/$id': typeof ApiPublicV1FoldersIdRoute
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
+  '/api/public/v1/storage/usage': typeof ApiPublicV1StorageUsageRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
   '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
@@ -924,6 +958,7 @@ export interface FileRoutesById {
   '/_authenticated/share-diagnostics': typeof AuthenticatedShareDiagnosticsRoute
   '/_authenticated/shared': typeof AuthenticatedSharedRoute
   '/_authenticated/storage-analytics': typeof AuthenticatedStorageAnalyticsRoute
+  '/_authenticated/storage-calculator': typeof AuthenticatedStorageCalculatorRoute
   '/_authenticated/trash': typeof AuthenticatedTrashRoute
   '/api/$': typeof ApiSplatRoute
   '/api/health': typeof ApiHealthRoute
@@ -970,11 +1005,14 @@ export interface FileRoutesById {
   '/api/public/v1/agent/heartbeat': typeof ApiPublicV1AgentHeartbeatRoute
   '/api/public/v1/chat/$slug': typeof ApiPublicV1ChatSlugRoute
   '/api/public/v1/files/$id': typeof ApiPublicV1FilesIdRouteWithChildren
+  '/api/public/v1/files/batch': typeof ApiPublicV1FilesBatchRoute
   '/api/public/v1/files/commit': typeof ApiPublicV1FilesCommitRoute
+  '/api/public/v1/files/import-url': typeof ApiPublicV1FilesImportUrlRoute
   '/api/public/v1/files/upload': typeof ApiPublicV1FilesUploadRoute
   '/api/public/v1/files/upload-url': typeof ApiPublicV1FilesUploadUrlRoute
   '/api/public/v1/folders/$id': typeof ApiPublicV1FoldersIdRoute
   '/api/public/v1/shares/$token': typeof ApiPublicV1SharesTokenRoute
+  '/api/public/v1/storage/usage': typeof ApiPublicV1StorageUsageRoute
   '/api/public/v1/uploads/$id': typeof ApiPublicV1UploadsIdRouteWithChildren
   '/api/public/v1/uploads/init': typeof ApiPublicV1UploadsInitRoute
   '/api/public/widget/$id/chat': typeof ApiPublicWidgetIdChatRoute
@@ -1032,6 +1070,7 @@ export interface FileRouteTypes {
     | '/share-diagnostics'
     | '/shared'
     | '/storage-analytics'
+    | '/storage-calculator'
     | '/trash'
     | '/api/$'
     | '/api/health'
@@ -1078,11 +1117,14 @@ export interface FileRouteTypes {
     | '/api/public/v1/agent/heartbeat'
     | '/api/public/v1/chat/$slug'
     | '/api/public/v1/files/$id'
+    | '/api/public/v1/files/batch'
     | '/api/public/v1/files/commit'
+    | '/api/public/v1/files/import-url'
     | '/api/public/v1/files/upload'
     | '/api/public/v1/files/upload-url'
     | '/api/public/v1/folders/$id'
     | '/api/public/v1/shares/$token'
+    | '/api/public/v1/storage/usage'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
     | '/api/public/widget/$id/chat'
@@ -1138,6 +1180,7 @@ export interface FileRouteTypes {
     | '/share-diagnostics'
     | '/shared'
     | '/storage-analytics'
+    | '/storage-calculator'
     | '/trash'
     | '/api/$'
     | '/api/health'
@@ -1184,11 +1227,14 @@ export interface FileRouteTypes {
     | '/api/public/v1/agent/heartbeat'
     | '/api/public/v1/chat/$slug'
     | '/api/public/v1/files/$id'
+    | '/api/public/v1/files/batch'
     | '/api/public/v1/files/commit'
+    | '/api/public/v1/files/import-url'
     | '/api/public/v1/files/upload'
     | '/api/public/v1/files/upload-url'
     | '/api/public/v1/folders/$id'
     | '/api/public/v1/shares/$token'
+    | '/api/public/v1/storage/usage'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
     | '/api/public/widget/$id/chat'
@@ -1245,6 +1291,7 @@ export interface FileRouteTypes {
     | '/_authenticated/share-diagnostics'
     | '/_authenticated/shared'
     | '/_authenticated/storage-analytics'
+    | '/_authenticated/storage-calculator'
     | '/_authenticated/trash'
     | '/api/$'
     | '/api/health'
@@ -1291,11 +1338,14 @@ export interface FileRouteTypes {
     | '/api/public/v1/agent/heartbeat'
     | '/api/public/v1/chat/$slug'
     | '/api/public/v1/files/$id'
+    | '/api/public/v1/files/batch'
     | '/api/public/v1/files/commit'
+    | '/api/public/v1/files/import-url'
     | '/api/public/v1/files/upload'
     | '/api/public/v1/files/upload-url'
     | '/api/public/v1/folders/$id'
     | '/api/public/v1/shares/$token'
+    | '/api/public/v1/storage/usage'
     | '/api/public/v1/uploads/$id'
     | '/api/public/v1/uploads/init'
     | '/api/public/widget/$id/chat'
@@ -1372,11 +1422,14 @@ export interface RootRouteChildren {
   ApiPublicV1AgentHeartbeatRoute: typeof ApiPublicV1AgentHeartbeatRoute
   ApiPublicV1ChatSlugRoute: typeof ApiPublicV1ChatSlugRoute
   ApiPublicV1FilesIdRoute: typeof ApiPublicV1FilesIdRouteWithChildren
+  ApiPublicV1FilesBatchRoute: typeof ApiPublicV1FilesBatchRoute
   ApiPublicV1FilesCommitRoute: typeof ApiPublicV1FilesCommitRoute
+  ApiPublicV1FilesImportUrlRoute: typeof ApiPublicV1FilesImportUrlRoute
   ApiPublicV1FilesUploadRoute: typeof ApiPublicV1FilesUploadRoute
   ApiPublicV1FilesUploadUrlRoute: typeof ApiPublicV1FilesUploadUrlRoute
   ApiPublicV1FoldersIdRoute: typeof ApiPublicV1FoldersIdRoute
   ApiPublicV1SharesTokenRoute: typeof ApiPublicV1SharesTokenRoute
+  ApiPublicV1StorageUsageRoute: typeof ApiPublicV1StorageUsageRoute
   ApiPublicV1UploadsIdRoute: typeof ApiPublicV1UploadsIdRouteWithChildren
   ApiPublicV1UploadsInitRoute: typeof ApiPublicV1UploadsInitRoute
   ApiPublicV1FilesIndexRoute: typeof ApiPublicV1FilesIndexRoute
@@ -1675,6 +1728,13 @@ declare module '@tanstack/react-router' {
       path: '/storage-analytics'
       fullPath: '/storage-analytics'
       preLoaderRoute: typeof AuthenticatedStorageAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/storage-calculator': {
+      id: '/_authenticated/storage-calculator'
+      path: '/storage-calculator'
+      fullPath: '/storage-calculator'
+      preLoaderRoute: typeof AuthenticatedStorageCalculatorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/trash': {
@@ -2006,11 +2066,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1FilesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/files/batch': {
+      id: '/api/public/v1/files/batch'
+      path: '/api/public/v1/files/batch'
+      fullPath: '/api/public/v1/files/batch'
+      preLoaderRoute: typeof ApiPublicV1FilesBatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/v1/files/commit': {
       id: '/api/public/v1/files/commit'
       path: '/api/public/v1/files/commit'
       fullPath: '/api/public/v1/files/commit'
       preLoaderRoute: typeof ApiPublicV1FilesCommitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/files/import-url': {
+      id: '/api/public/v1/files/import-url'
+      path: '/api/public/v1/files/import-url'
+      fullPath: '/api/public/v1/files/import-url'
+      preLoaderRoute: typeof ApiPublicV1FilesImportUrlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/v1/files/upload': {
@@ -2046,6 +2120,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/v1/shares/$token'
       fullPath: '/api/public/v1/shares/$token'
       preLoaderRoute: typeof ApiPublicV1SharesTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/storage/usage': {
+      id: '/api/public/v1/storage/usage'
+      path: '/api/public/v1/storage/usage'
+      fullPath: '/api/public/v1/storage/usage'
+      preLoaderRoute: typeof ApiPublicV1StorageUsageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/v1/uploads/$id': {
@@ -2174,6 +2255,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedShareDiagnosticsRoute: typeof AuthenticatedShareDiagnosticsRoute
   AuthenticatedSharedRoute: typeof AuthenticatedSharedRoute
   AuthenticatedStorageAnalyticsRoute: typeof AuthenticatedStorageAnalyticsRoute
+  AuthenticatedStorageCalculatorRoute: typeof AuthenticatedStorageCalculatorRoute
   AuthenticatedTrashRoute: typeof AuthenticatedTrashRoute
   AuthenticatedAiDeploymentsRoute: typeof AuthenticatedAiDeploymentsRoute
   AuthenticatedAiModelsRoute: typeof AuthenticatedAiModelsRouteWithChildren
@@ -2202,6 +2284,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedShareDiagnosticsRoute: AuthenticatedShareDiagnosticsRoute,
   AuthenticatedSharedRoute: AuthenticatedSharedRoute,
   AuthenticatedStorageAnalyticsRoute: AuthenticatedStorageAnalyticsRoute,
+  AuthenticatedStorageCalculatorRoute: AuthenticatedStorageCalculatorRoute,
   AuthenticatedTrashRoute: AuthenticatedTrashRoute,
   AuthenticatedAiDeploymentsRoute: AuthenticatedAiDeploymentsRoute,
   AuthenticatedAiModelsRoute: AuthenticatedAiModelsRouteWithChildren,
@@ -2312,11 +2395,14 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicV1AgentHeartbeatRoute: ApiPublicV1AgentHeartbeatRoute,
   ApiPublicV1ChatSlugRoute: ApiPublicV1ChatSlugRoute,
   ApiPublicV1FilesIdRoute: ApiPublicV1FilesIdRouteWithChildren,
+  ApiPublicV1FilesBatchRoute: ApiPublicV1FilesBatchRoute,
   ApiPublicV1FilesCommitRoute: ApiPublicV1FilesCommitRoute,
+  ApiPublicV1FilesImportUrlRoute: ApiPublicV1FilesImportUrlRoute,
   ApiPublicV1FilesUploadRoute: ApiPublicV1FilesUploadRoute,
   ApiPublicV1FilesUploadUrlRoute: ApiPublicV1FilesUploadUrlRoute,
   ApiPublicV1FoldersIdRoute: ApiPublicV1FoldersIdRoute,
   ApiPublicV1SharesTokenRoute: ApiPublicV1SharesTokenRoute,
+  ApiPublicV1StorageUsageRoute: ApiPublicV1StorageUsageRoute,
   ApiPublicV1UploadsIdRoute: ApiPublicV1UploadsIdRouteWithChildren,
   ApiPublicV1UploadsInitRoute: ApiPublicV1UploadsInitRoute,
   ApiPublicV1FilesIndexRoute: ApiPublicV1FilesIndexRoute,
