@@ -12,7 +12,8 @@ describe("storage usage", () => {
   });
   it("recommends a larger tier when growth exceeds headroom", () => {
     expect(recommendTier(1 * GB, 0).id).toBe("free");
-    expect(recommendTier(1 * GB, GB / 3).id).toBe("pro");
+    expect(recommendTier(1 * GB, GB / 10).id).toBe("pro");
+    expect(recommendTier(1 * GB, GB / 3).id).toBe("business");
   });
   it("only counts last 30 days toward growth", () => {
     const now = Date.parse("2026-11-08T00:00:00Z");
