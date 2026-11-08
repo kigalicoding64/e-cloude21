@@ -34,6 +34,7 @@ const groups: { label: string; items: NavItem[] }[] = [
       { to: "/favorites", label: "Favorites", icon: Star },
       { to: "/trash", label: "Trash", icon: Trash2 },
       { to: "/storage-analytics", label: "Analytics", icon: BarChart3 },
+      { to: "/storage-calculator", label: "Usage Calculator", icon: BarChart3 },
       { to: "/backup", label: "Backup Center", icon: CloudUpload },
     ],
   },
