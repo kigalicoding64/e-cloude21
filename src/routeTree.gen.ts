@@ -37,6 +37,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAdminCredentialsRouteImport } from './routes/_authenticated/admin-credentials'
 import { Route as AuthenticatedApiKeysRouteImport } from './routes/_authenticated/api-keys'
 import { Route as AuthenticatedBackupRouteImport } from './routes/_authenticated/backup'
+import { Route as AuthenticatedConnectionsRouteImport } from './routes/_authenticated/connections'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDeveloperRouteImport } from './routes/_authenticated/developer'
 import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
@@ -262,6 +263,12 @@ const AuthenticatedBackupRoute = AuthenticatedBackupRouteImport.update({
   path: '/backup',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedConnectionsRoute =
+  AuthenticatedConnectionsRouteImport.update({
+    id: '/connections',
+    path: '/connections',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -723,6 +730,7 @@ export interface FileRoutesByFullPath {
   '/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/api-keys': typeof AuthenticatedApiKeysRoute
   '/backup': typeof AuthenticatedBackupRoute
+  '/connections': typeof AuthenticatedConnectionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/developer': typeof AuthenticatedDeveloperRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
@@ -833,6 +841,7 @@ export interface FileRoutesByTo {
   '/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/api-keys': typeof AuthenticatedApiKeysRoute
   '/backup': typeof AuthenticatedBackupRoute
+  '/connections': typeof AuthenticatedConnectionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/developer': typeof AuthenticatedDeveloperRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
@@ -945,6 +954,7 @@ export interface FileRoutesById {
   '/_authenticated/admin-credentials': typeof AuthenticatedAdminCredentialsRoute
   '/_authenticated/api-keys': typeof AuthenticatedApiKeysRoute
   '/_authenticated/backup': typeof AuthenticatedBackupRoute
+  '/_authenticated/connections': typeof AuthenticatedConnectionsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/developer': typeof AuthenticatedDeveloperRoute
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
@@ -1057,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin-credentials'
     | '/api-keys'
     | '/backup'
+    | '/connections'
     | '/dashboard'
     | '/developer'
     | '/favorites'
@@ -1167,6 +1178,7 @@ export interface FileRouteTypes {
     | '/admin-credentials'
     | '/api-keys'
     | '/backup'
+    | '/connections'
     | '/dashboard'
     | '/developer'
     | '/favorites'
@@ -1278,6 +1290,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin-credentials'
     | '/_authenticated/api-keys'
     | '/_authenticated/backup'
+    | '/_authenticated/connections'
     | '/_authenticated/dashboard'
     | '/_authenticated/developer'
     | '/_authenticated/favorites'
@@ -1637,6 +1650,13 @@ declare module '@tanstack/react-router' {
       path: '/backup'
       fullPath: '/backup'
       preLoaderRoute: typeof AuthenticatedBackupRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/connections': {
+      id: '/_authenticated/connections'
+      path: '/connections'
+      fullPath: '/connections'
+      preLoaderRoute: typeof AuthenticatedConnectionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -2242,6 +2262,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminCredentialsRoute: typeof AuthenticatedAdminCredentialsRoute
   AuthenticatedApiKeysRoute: typeof AuthenticatedApiKeysRoute
   AuthenticatedBackupRoute: typeof AuthenticatedBackupRoute
+  AuthenticatedConnectionsRoute: typeof AuthenticatedConnectionsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDeveloperRoute: typeof AuthenticatedDeveloperRoute
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
@@ -2271,6 +2292,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminCredentialsRoute: AuthenticatedAdminCredentialsRoute,
   AuthenticatedApiKeysRoute: AuthenticatedApiKeysRoute,
   AuthenticatedBackupRoute: AuthenticatedBackupRoute,
+  AuthenticatedConnectionsRoute: AuthenticatedConnectionsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDeveloperRoute: AuthenticatedDeveloperRoute,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
