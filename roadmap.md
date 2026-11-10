@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Add developer connection settings using owner-scoped E-Cloud keys, without claiming drop-in SDK compatibility.
+- [ ] Prepare Vercel deployment configuration and verify the custom-domain outage (live deployment requires hosting access).
+
 - [x] Add an admin credential inventory with names and configuration status only; private values remain hidden.
 
 - [x] Verify the Lovable preview API and hosted backend
