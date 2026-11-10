@@ -84,8 +84,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "E-Cloud — API-first cloud storage" },
       { name: "twitter:description", content: "Modern cloud storage with a developer-first REST API. Upload files, share securely, and integrate in minutes." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5bc9cf7d-2010-4615-bd5d-9f0272036f80/id-preview-2843a956--a8d0703a-a9b5-4e18-b4df-87058053d16d.lovable.app-1782917630502.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5bc9cf7d-2010-4615-bd5d-9f0272036f80/id-preview-2843a956--a8d0703a-a9b5-4e18-b4df-87058053d16d.lovable.app-1782917630502.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

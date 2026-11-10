@@ -11,3 +11,5 @@
 - MCP server lives in src/lib/mcp (one tool per file, OAuth via backend issuer, RLS as caller) — external assistants act as the signed-in user, never with admin keys.
 - OAuth 2.1/OIDC provider (EGREED Connect) lives in src/lib/oauth*.ts with endpoints under /api/public/oauth/* and consent at /oauth/authorize; token/code/key tables are service-role only. Why: other EGREED apps sign users in through this one identity source.
 - Admin credential inventory uses an allowlisted names-and-status server response with role verification; only browser-published connection settings may be revealed locally, never private environment values, to prevent secret disclosure.
+- Developer connection keys reuse hashed owner-scoped storage API keys; no anonymous access or database-service-role bypass, because SDK compatibility is not yet implemented.
+- External Vercel builds use Nitro's Vercel preset and a public-setting preflight; managed Lovable builds retain their own target, so deployment formats cannot be mixed.

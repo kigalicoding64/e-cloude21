@@ -12,6 +12,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Modern cloud storage with a developer-first REST API. Upload files, share securely, and integrate in minutes." },
       { property: "og:title", content: "E-Cloud — API-first cloud storage" },
       { property: "og:description", content: "Upload, manage, and share files. Ship features fast with our REST API." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Landing,
