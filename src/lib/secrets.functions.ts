@@ -6,7 +6,10 @@ import { CREDENTIAL_DEFINITIONS, publicConnectionValue, requireCredentialAdmin }
 export const listProjectSecrets = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data, error } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    const { data, error } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
     requireCredentialAdmin(data, Boolean(error));
     const connection = {
       url: import.meta.env.VITE_SUPABASE_URL as string | undefined,
@@ -22,7 +25,13 @@ export const listProjectSecrets = createServerFn({ method: "POST" })
         sensitive,
         configured,
         value: sensitive ? null : value,
-        maskedValue: configured ? (value ? `${value.slice(0, 4)}••••••••${value.slice(-4)}` : "•••••••• (hidden)") : null,
+        maskedValue: configured
+          ? sensitive
+            ? "•••••••• (private)"
+            : value
+              ? `${value.slice(0, 4)}••••••••${value.slice(-4)}`
+              : "•••••••• (hidden)"
+          : null,
       };
     });
   });
