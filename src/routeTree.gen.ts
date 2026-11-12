@@ -69,6 +69,7 @@ import { Route as AuthenticatedAiOrchestratorsRouteImport } from './routes/_auth
 import { Route as AuthenticatedAiProviderKeysRouteImport } from './routes/_authenticated/ai.provider-keys'
 import { Route as AuthenticatedAiUsageRouteImport } from './routes/_authenticated/ai.usage'
 import { Route as AuthenticatedAiWidgetsRouteImport } from './routes/_authenticated/ai.widgets'
+import { Route as AuthenticatedDeveloperSecretsRouteImport } from './routes/_authenticated/developer.secrets'
 import { Route as AuthenticatedOrganizationsIdRouteImport } from './routes/_authenticated/organizations.$id'
 import { Route as ApiFilesIndexRouteImport } from './routes/api/files/index'
 import { Route as ApiFilesIdRouteImport } from './routes/api/files/$id'
@@ -433,6 +434,12 @@ const AuthenticatedAiWidgetsRoute = AuthenticatedAiWidgetsRouteImport.update({
   path: '/ai/widgets',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDeveloperSecretsRoute =
+  AuthenticatedDeveloperSecretsRouteImport.update({
+    id: '/secrets',
+    path: '/secrets',
+    getParentRoute: () => AuthenticatedDeveloperRoute,
+  } as any)
 const AuthenticatedOrganizationsIdRoute =
   AuthenticatedOrganizationsIdRouteImport.update({
     id: '/$id',
@@ -732,7 +739,7 @@ export interface FileRoutesByFullPath {
   '/backup': typeof AuthenticatedBackupRoute
   '/connections': typeof AuthenticatedConnectionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/developer': typeof AuthenticatedDeveloperRoute
+  '/developer': typeof AuthenticatedDeveloperRouteWithChildren
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/files': typeof AuthenticatedFilesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -762,6 +769,7 @@ export interface FileRoutesByFullPath {
   '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/ai/usage': typeof AuthenticatedAiUsageRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
+  '/developer/secrets': typeof AuthenticatedDeveloperSecretsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -843,7 +851,7 @@ export interface FileRoutesByTo {
   '/backup': typeof AuthenticatedBackupRoute
   '/connections': typeof AuthenticatedConnectionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/developer': typeof AuthenticatedDeveloperRoute
+  '/developer': typeof AuthenticatedDeveloperRouteWithChildren
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/files': typeof AuthenticatedFilesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -873,6 +881,7 @@ export interface FileRoutesByTo {
   '/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/ai/usage': typeof AuthenticatedAiUsageRoute
   '/ai/widgets': typeof AuthenticatedAiWidgetsRoute
+  '/developer/secrets': typeof AuthenticatedDeveloperSecretsRoute
   '/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -956,7 +965,7 @@ export interface FileRoutesById {
   '/_authenticated/backup': typeof AuthenticatedBackupRoute
   '/_authenticated/connections': typeof AuthenticatedConnectionsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/developer': typeof AuthenticatedDeveloperRoute
+  '/_authenticated/developer': typeof AuthenticatedDeveloperRouteWithChildren
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
   '/_authenticated/files': typeof AuthenticatedFilesRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
@@ -986,6 +995,7 @@ export interface FileRoutesById {
   '/_authenticated/ai/provider-keys': typeof AuthenticatedAiProviderKeysRoute
   '/_authenticated/ai/usage': typeof AuthenticatedAiUsageRoute
   '/_authenticated/ai/widgets': typeof AuthenticatedAiWidgetsRoute
+  '/_authenticated/developer/secrets': typeof AuthenticatedDeveloperSecretsRoute
   '/_authenticated/organizations/$id': typeof AuthenticatedOrganizationsIdRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/v1/health': typeof ApiV1HealthRoute
@@ -1099,6 +1109,7 @@ export interface FileRouteTypes {
     | '/ai/provider-keys'
     | '/ai/usage'
     | '/ai/widgets'
+    | '/developer/secrets'
     | '/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1210,6 +1221,7 @@ export interface FileRouteTypes {
     | '/ai/provider-keys'
     | '/ai/usage'
     | '/ai/widgets'
+    | '/developer/secrets'
     | '/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1322,6 +1334,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai/provider-keys'
     | '/_authenticated/ai/usage'
     | '/_authenticated/ai/widgets'
+    | '/_authenticated/developer/secrets'
     | '/_authenticated/organizations/$id'
     | '/api/files/$id'
     | '/api/v1/health'
@@ -1876,6 +1889,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiWidgetsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/developer/secrets': {
+      id: '/_authenticated/developer/secrets'
+      path: '/secrets'
+      fullPath: '/developer/secrets'
+      preLoaderRoute: typeof AuthenticatedDeveloperSecretsRouteImport
+      parentRoute: typeof AuthenticatedDeveloperRoute
+    }
     '/_authenticated/organizations/$id': {
       id: '/_authenticated/organizations/$id'
       path: '/$id'
@@ -2229,6 +2249,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedDeveloperRouteChildren {
+  AuthenticatedDeveloperSecretsRoute: typeof AuthenticatedDeveloperSecretsRoute
+}
+
+const AuthenticatedDeveloperRouteChildren: AuthenticatedDeveloperRouteChildren =
+  {
+    AuthenticatedDeveloperSecretsRoute: AuthenticatedDeveloperSecretsRoute,
+  }
+
+const AuthenticatedDeveloperRouteWithChildren =
+  AuthenticatedDeveloperRoute._addFileChildren(
+    AuthenticatedDeveloperRouteChildren,
+  )
+
 interface AuthenticatedOrganizationsRouteChildren {
   AuthenticatedOrganizationsIdRoute: typeof AuthenticatedOrganizationsIdRoute
 }
@@ -2264,7 +2298,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBackupRoute: typeof AuthenticatedBackupRoute
   AuthenticatedConnectionsRoute: typeof AuthenticatedConnectionsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedDeveloperRoute: typeof AuthenticatedDeveloperRoute
+  AuthenticatedDeveloperRoute: typeof AuthenticatedDeveloperRouteWithChildren
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
   AuthenticatedFilesRoute: typeof AuthenticatedFilesRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -2294,7 +2328,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBackupRoute: AuthenticatedBackupRoute,
   AuthenticatedConnectionsRoute: AuthenticatedConnectionsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedDeveloperRoute: AuthenticatedDeveloperRoute,
+  AuthenticatedDeveloperRoute: AuthenticatedDeveloperRouteWithChildren,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
   AuthenticatedFilesRoute: AuthenticatedFilesRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
